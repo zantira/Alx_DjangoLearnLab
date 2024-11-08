@@ -14,7 +14,8 @@ author = Author.objects.get(name='Author name')
 books = Book.objects.filter(author=author)
 
 #list all books in the library
-library = Library.objects.get(name="name of library")
+library_name = 'name of library'
+library = Library.objects.get(name=library_name)
 all_books = library.books.all()
 
 #retrieve the name of the librarian
