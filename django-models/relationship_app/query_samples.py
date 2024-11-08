@@ -20,4 +20,4 @@ library = Library.objects.get(name=library_name)
 all_books = library.books.all()
 
 #retrieve the name of the librarian
-librarian = Librarian.librarian
+librarian = Librarian.objects.get(library='')
