@@ -8,7 +8,8 @@ A script which contains a query for each of the following queries for the relati
 #query all books by a specific author
 from relationship_app.models import *
 #get author instance by name
-author = Author.objects.get(name='Author name')
+author_name = 'name of author'
+author = Author.objects.get(name=author_name)
 
 #retrieve all books specific author
 books = Book.objects.filter(author=author)
