@@ -36,6 +36,7 @@ class LibraryDetailView(DetailView):
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 
 #Create a view that handles form submission and redirects users upon successful registration.
 def register(request):
