@@ -37,6 +37,7 @@ from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 #Create a view that handles form submission and redirects users upon successful registration.
 def register(request):
@@ -49,3 +50,10 @@ def register(request):
     else:
         form = RegistrationForm()
         return redirect(request, 'register,html', {'form': form})
+    
+    
+class RegistrationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+        template_name = 'relationship_app/register,html'
