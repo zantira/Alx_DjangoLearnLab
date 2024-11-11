@@ -49,11 +49,6 @@ def register(request):
             return redirect('home')
     else:
         form = RegistrationForm()
-        return redirect(request, 'register,html', {'form': form})
+        return redirect(request, 'relationship_app/register,html', {'form': form})
     
     
-class RegistrationForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
-        template_name = 'relationship_app/register,html'
