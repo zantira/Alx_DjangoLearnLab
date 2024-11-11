@@ -48,7 +48,7 @@ def register(request):
             login(request, user)
             return redirect('home')
     else:
-        form = RegistrationForm()
+        form = UserCreationForm()
         return redirect(request, 'relationship_app/register.html', {'form': form})
     
     
