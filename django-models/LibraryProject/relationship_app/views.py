@@ -70,14 +70,14 @@ from .models import UserProfile, is_admin, is_librarian, is_member
 #Admin view
 @user_passes_test(is_admin)
 def admin_view(request):
-    return render(request, 'admin_view.html', {'message': 'Welcome!, Admin'})
+    return render(request, 'relationship_app/admin_view.html', {'message': 'Welcome!, Admin'})
 
 #Librarian view
 @user_passes_test(is_librarian)
 def librarian_view(request):
-    return render(request, 'librarian_view.html', {'message': 'Welcome! Librarian'})
+    return render(request, 'relationship_app/librarian_view.html', {'message': 'Welcome! Librarian'})
 
 #Member view
 @user_passes_test(is_member)
 def member_view(request):
-    return render(request, 'librarian_view.html', {'message': 'Welcome! Member'})
+    return render(request, 'relationship_app/librarian_view.html', {'message': 'Welcome! Member'})
