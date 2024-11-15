@@ -52,3 +52,32 @@ def register(request):
         return redirect(request, 'relationship_app/register.html', {'form': form})
     
     
+#Set up role-based access for Admin, Librarian, and Member
+def is_admin(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
+
+def is_member(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
+
+def is_librarian(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
+
+#Set up role-based view for Admin, Librarian, and Member
+from django.shortcuts import render
+from django.contrib.auth.decorators import user_passes_test
+from .models import UserProfile, is_admin, is_librarian, is_member
+
+#Admin view
+@user_passes_test(is_admin)
+def admin_view(request):
+    return render(request, 'admin_view.html', {'message': 'Welcome!, Admin'})
+
+#Librarian view
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return render(request, 'librarian_view.html', {'message': 'Welcome! Librarian'})
+
+#Member view
+@user_passes_test(is_member)
+def member_view(request):
+    return render(request, 'librarian_view.html', {'message': 'Welcome! Member'})
