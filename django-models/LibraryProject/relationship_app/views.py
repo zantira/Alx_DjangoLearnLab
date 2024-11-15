@@ -2,6 +2,18 @@ from django.shortcuts import render, HttpResponse
 from .models import Book
 from .models import Library
 from django.views.generic.detail import DetailView
+from django.shortcuts import render, redirect
+
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import user_passes_test
+from .models import UserProfile
+
+
+from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 def list_books(request):
@@ -32,13 +44,6 @@ class LibraryDetailView(DetailView):
         context['library_details'] = library.get_library_details()
         return HttpResponse(request, 'relationship_app/library_detail.html', context)
     
-    
-from django.shortcuts import render, redirect
-
-from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-
 #Create a view that handles form submission and redirects users upon successful registration.
 def register(request):
     if request.method == 'POST':
@@ -63,9 +68,7 @@ def is_librarian(user):
     return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
 #Set up role-based view for Admin, Librarian, and Member
-from django.shortcuts import render
-from django.contrib.auth.decorators import user_passes_test
-from .models import UserProfile, is_admin, is_librarian, is_member
+
 
 #Admin view
 @user_passes_test(is_admin)
@@ -81,3 +84,16 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html', {'message': 'Welcome! Member'})
+
+#Add permissions for Book model
+@permission_required('relationship_app.can_add_book', raise_exception=True)
+def add_book(request):
+    return render(request, 'relationship_app/add_book.html')
+
+@permission_required('relationship_app.can_delete_book', raise_exception=True)
+def delete_book(request):
+    return render(request, 'relationship_app/delete_book.html')
+
+@permission_required('relationship_app.can_change_book', raise_exception=True)
+def change_book(request):
+    return render(request, 'relationship_app/change_book.html')

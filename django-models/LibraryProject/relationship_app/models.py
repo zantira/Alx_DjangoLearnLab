@@ -13,6 +13,11 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     
+    #add permissions
+    class Meta:
+        permissions = [('can_add_book', 'can add a new book'), ('can_change_book', 'can change a book'), ('can_delete_book', 'can delete a book')]
+    
+    
     def __str__(self):
         return f"{self.title}; {self.author}"
 
@@ -52,7 +57,8 @@ class UserProfile(models.Model):
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.contrib.auth.models import User
+from .models import UserProfile
 #Set up signals to autocreate Userprofile
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
