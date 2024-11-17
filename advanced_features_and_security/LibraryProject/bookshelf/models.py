@@ -40,8 +40,9 @@ class CustomUserManger(BaseUserManager):
 
 #create custom user model by extending AbstractUser
 class CustomUser(AbstractUser):
-    email          =  models.EmailField(unique=True)
+    date_of_birth  =  models.DateField()
     profile_photo  =  models.ImageField(blank=True, null=True)
+    email          = models.EmailField(unique=True)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
