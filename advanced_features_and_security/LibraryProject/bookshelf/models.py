@@ -14,7 +14,7 @@ class Book(models.Model):
     
     
 #define custom user manager
-class CustomUserManger(BaseUserManager):
+class CustomUserManager(BaseUserManager):
     
     def creat_user(self, email, password, profile_photo=None, **extra_fields):
         if not email:
