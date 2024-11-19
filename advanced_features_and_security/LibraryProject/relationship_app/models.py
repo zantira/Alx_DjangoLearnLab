@@ -1,9 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.contrib.auth.models import User
-from .models import UserProfile
+from django.conf import settings
 
 
 # Create relationshipp_app models.
@@ -44,7 +41,7 @@ class Librarian(models.Model):
     
 #create user profile
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(Author, on_delete=models.CASCADE)
     class Role(models.TextChoices):
         ADMIN = 'ADMINSTRATOR', 'Admin'
         MEMBER = 'MEMBER', 'Member'
@@ -59,6 +56,10 @@ class UserProfile(models.Model):
         return f'{self.user.username} - {self.role}'
 
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import User
+from .models import UserProfile
 #Set up signals to autocreate Userprofile
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -70,7 +71,3 @@ def save_user_profile(sender, instance, **kwargs):
     instance.userprofile.save()
 
 
-
-
-        
-    

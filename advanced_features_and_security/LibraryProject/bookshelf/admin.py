@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Book
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
-from django.utils.translation import gettext_lazy as _
+#from django.utils.translation import gettext_lazy as _
 # Register your models here.
 #admin.site.register(Book)
 
@@ -16,6 +16,21 @@ class BookAdmin(admin.ModelAdmin):
 # register BookAdmin
 admin.site.register(Book, BookAdmin)
 
+
+
+# Register your models here.
+#admin.site.register(Book)
+
+# customized book Admin interface
+
+class BookAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'publication_year')
+    search_fields = ('title', 'author')
+    list_filter = ['publication_year']
+    
+# register BookAdmin
+#admin.site.register(BookAdmin)
+
 class CustomUserAdmin(UserAdmin):
     # Fields to display in the user list view
     list_display = ('email', 'username', 'is_staff', 'is_superuser', 'is_active', 'profile_photo')
@@ -28,11 +43,11 @@ class CustomUserAdmin(UserAdmin):
     # Fieldsets for organizing fields in the user detail view
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal Info'), {'fields': ('username', 'profile_photo')}),
-        (_('Permissions'), {
+        (('Personal Info'), {'fields': ('username', 'profile_photo')}),
+        (('Permissions'), {
             'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions'),
         }),
-        (_('Important Dates'), {'fields': ('last_login', 'date_joined')}),
+        (('Important Dates'), {'fields': ('last_login', 'date_joined')}),
     )
 
     # Fields to display in the add user form
