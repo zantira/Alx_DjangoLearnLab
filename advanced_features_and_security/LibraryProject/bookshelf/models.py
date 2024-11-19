@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext as _
 from django.contrib.auth.base_user import BaseUserManager
-from django.conf import settings
+from django.contrib.auth.models import  Group, Permission, User
 
 # Create your models here.
 class Book(models.Model):
@@ -55,3 +55,43 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return self.email
+    
+
+
+# Create groups
+editors_group, _ = Group.objects.get_or_create(name='Editors')
+viewers_group, _ = Group.objects.get_or_create(name='Viewers')
+admins_group, _ = Group.objects.get_or_create(name='Admins')
+
+class Post(models.Model):
+    title = models.CharField(max_length=300)
+    author = models.CharField(max_length=100)
+
+    class Meta:
+        permissions = [
+            ('can_view', 'Can view post'),
+            ('can_create', 'Can create post'),
+            ('can_edit', 'Can edit post'),
+            ('can_delete', 'Can delete post'),
+        ]
+
+# Assign permissions to groups
+try:
+    can_view = Permission.objects.get(codename='can_view')
+    can_create = Permission.objects.get(codename='can_create')
+    can_edit = Permission.objects.get(codename='can_edit')
+    can_delete = Permission.objects.get(codename='can_delete')
+
+    editors_group.permissions.add(can_view, can_create, can_edit)
+    viewers_group.permissions.add(can_view)
+    admins_group.permissions.add(can_view, can_create, can_edit, can_delete)
+
+except Permission.DoesNotExist as e:
+    print(f"Missing permission: {e}")
+
+# Create a user and add to the Editors group
+user = User.objects.create(username='john', email='john@gmail.com', password='johnpassword')
+user.last_name = 'Lennon'
+user.save()
+user.groups.add(editors_group)
+
