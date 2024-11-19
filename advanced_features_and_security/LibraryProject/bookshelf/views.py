@@ -21,3 +21,11 @@ def delete_post(request):
 @permission_required('bookshelf.can_view', raise_exception=True)
 def view_post(request):
     return render(request, 'bookshelf/view_post.html')
+
+# bookshelf/views
+
+from .models import Book
+
+def book_list(request):
+    books = Book.objects.all()  # Get all books from the database
+    return render(request, 'bookshelf/book_list.html', {'books': books})
