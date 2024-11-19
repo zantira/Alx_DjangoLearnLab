@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.shortcuts import render
+from .models import Book
 from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
@@ -23,8 +23,6 @@ def view_post(request):
     return render(request, 'bookshelf/view_post.html')
 
 # bookshelf/views
-
-from .models import Book
 
 def book_list(request):
     books = Book.objects.all()  # Get all books from the database
