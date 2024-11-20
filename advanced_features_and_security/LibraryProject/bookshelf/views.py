@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Book
 from django.contrib.auth.decorators import permission_required
+from .forms import ExampleForm
 
 # Create your views here.
 
@@ -30,8 +31,8 @@ def book_list(request):
 
 
 # Insecure - vulnerable to SQL injection
-query = "SELECT * FROM my_table WHERE name = '%s'" % user_input
+query = "SELECT * FROM my_table WHERE name = '%s'" % ExampleForm
 
 # Secure using Django ORM
 
-results = Book.objects.filter(name=user_input)
+results = Book.objects.filter(name=ExampleForm)
