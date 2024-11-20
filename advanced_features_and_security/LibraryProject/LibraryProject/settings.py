@@ -51,7 +51,7 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD            = True
 
 # Set to validate secure exteranl connection
-SECURE_PROXY__SSL_HEADER = ("HTTP_X_FORWARDED_PROTOCOL", "https")
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTOCOL", "https")
 
 
 
