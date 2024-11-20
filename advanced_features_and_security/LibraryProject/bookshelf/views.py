@@ -27,3 +27,11 @@ def view_post(request):
 def book_list(request):
     books = Book.objects.all()  # Get all books from the database
     return render(request, 'bookshelf/book_list.html', {'books': books})
+
+
+# Insecure - vulnerable to SQL injection
+query = "SELECT * FROM my_table WHERE name = '%s'" % user_input
+
+# Secure using Django ORM
+
+results = Book.objects.filter(name=user_input)

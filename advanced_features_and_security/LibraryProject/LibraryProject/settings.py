@@ -23,7 +23,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$1sc7qj^pxtwe7*$kg7ikp1@6(4jmbchl+f9=hlo%)&t#e$+13'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+# Security settings for browsers
+SECURE_BROWSER_XSS_FILTER =     True
+
+X_FRAME_OPTIONS = 'DENY'
+
+SECURE_CONTENT_TYPE_NOSNIF =    True
+
+# Enforeced cookies to be sent only over HTTPS
+CSRF_COOKIE_SCURE = True
+
+# Enforced HTTPS-ONLY cookies
+SESSION_COOKIE_SECURE = True
+
 
 ALLOWED_HOSTS = []
 
@@ -41,6 +55,16 @@ INSTALLED_APPS = [
     'relationship_app',
 ]
 
+# add csp to installed apps
+
+INSTALLED_APPS += ['csp']
+
+CSP_DEFAULT_SRC = ["'self'"]
+CSP_SCRIPT_SRC = ["'self'", 'https://trustedscripts.example.com']
+CSP_STYLE_SRC = ["'self'", 'https://trustedstyles.example.com']
+CSP_IMG_SRC = ["'self'", 'https://trustedimages.example.com']
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,6 +74,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+# Add django_csp.middleware.CSPMiddleware to MIDDLEWARE.
+MIDDLEWARE += ['csp.middleware.CSPMiddleware']
 
 ROOT_URLCONF = 'LibraryProject.urls'
 
