@@ -38,6 +38,22 @@ CSRF_COOKIE_SECURE = True
 # Enforced HTTPS-ONLY cookies
 SESSION_COOKIE_SECURE = True
 
+# Configure Application Settings to support and enforced HTTPS
+
+# Set to redirect all non-HTTPS requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# Instruct browsers to access site only via  HTTPS for one_year
+SECURE_HSTS_SECONDS = 315336000
+
+# Include all subdomains in HSTS policy and to allow preloading
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD            = True
+
+# Implement HTTP headers to secure app from attaacks
+
+
+
 
 ALLOWED_HOSTS = []
 
